@@ -12,12 +12,11 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {
     }
 
-
     @ApiOperation({summary: 'User creation'})
     @ApiResponse({status: 200, type: GetUserDto})
     @Post()
     public create(@Body() createUserDto: PostUserDto): Promise<User> {
-        return this.usersService.create(createUserDto);
+        return this.usersService.create(createUserDto, true);
     }
     @ApiBearerAuth('authorization')
     @ApiOperation({summary: 'Get all users'})
@@ -48,45 +47,10 @@ export class UsersController {
 
     @ApiBearerAuth('authorization')
     @ApiOperation({summary: 'User creation'})
-    @ApiResponse({status: 200, type: GetUserDto})
+    @ApiResponse({status: 200, type: DeleteResult})
     @UseGuards(AccessTokenGuard)
     @Delete(':id')
     public remove(@Param('id') id: string): Promise<DeleteResult> {
         return this.usersService.remove(id);
     }
-
-
-    // @ApiOperation({summary: 'Log in by email and password'})
-    // @ApiResponse({status: 200, type: GetUserDto})
-    // @Post('/login')
-    // public async login(@Body() loginInfo: PostLoginAuthDto): Promise<any> {
-    //     console.log('login', loginInfo)
-    //     const jwt: string = await this.usersService.login(loginInfo);
-    //     return {access_token: jwt, token_type: 'JWT', expires_in: 10000};
-    // }
-
-    // @ApiOperation({summary: 'User creation'})
-    // @ApiResponse({status: 200, type: GetUserDto})
-    // @Post('/createUser')
-    // public createUser(@Body() postUserDto: PostUserDto): Promise<GetUserDto> {
-    //     postUserDto['id'] = uuidv4();
-    //     return this.usersService.create(postUserDto);
-    // }
-
-    // @ApiBearerAuth('authorization')
-    // @ApiOperation({summary: 'Get all users'})
-    // @ApiResponse({status: 200, type: [GetUserDto]})
-    // @Get('/getAllUsers')
-    // public getUsers(@Query() pageOptionsDto: PaginateDto): Promise<any> {
-    //     return this.usersService.findAll(pageOptionsDto);
-    // }
-
-    // @ApiBearerAuth('authorization')
-    // @ApiOperation({summary: 'Get user by email'})
-    // @ApiResponse({status: 200, type: [GetUserDto] || DefaultAnswerMessageDto})
-    // @Get('/:email')
-    // public getUserByEmail(@Param('email') email: string): Promise<GetUserDto[] | DefaultAnswerMessageDto> {
-    //     return this.usersService.findByEmail(email);
-    // }
-
 }

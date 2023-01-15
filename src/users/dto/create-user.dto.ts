@@ -13,8 +13,6 @@ export class PostUserDto {
     lastName?: string;
     @ApiProperty({example: 'Il`ich', description: 'User patronymic name'})
     patronymic?: string;
-    @ApiProperty({example: 'Image in Base64', description: 'User avatar'})
-    photo?: string;
     @ApiProperty({example: 1, description: 'User role'})
     role?: number;
     @ApiProperty({example: false})
@@ -35,8 +33,6 @@ export class PutUserDto {
     lastName?: string;
     @ApiProperty({example: 'Il`ich', description: 'User patronymic name'})
     patronymic?: string;
-    @ApiProperty({example: 'Image in Base64', description: 'User avatar'})
-    photo?: string;
     @ApiProperty({example: false})
     isApproved?: boolean;
     @ApiProperty({example: false})

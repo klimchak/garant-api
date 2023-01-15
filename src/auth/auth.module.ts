@@ -7,15 +7,25 @@ import {RefreshTokenStrategy} from "./strategies/refreshToken.strategy";
 import {UsersModule} from "../users/users.module";
 import {UsersService} from "../users/users.service";
 import {PassportModule} from "@nestjs/passport";
-import {AppService} from "../app.service";
+import {CustomerModule} from "../customer/customer.module";
+import {CustomerService} from "../customer/customer.service";
+import {MailModule} from "../mail/mail.module";
+import {MailService} from "../mail/mail.service";
 
 @Module({
   imports: [
       PassportModule.register({ session: true }),
       JwtModule.register({}),
-      UsersModule
+      MailModule,
+      UsersModule,
+      CustomerModule,
   ],
   controllers: [AuthController],
-  providers: [AppService, UsersService, AuthService, AccessTokenStrategy, RefreshTokenStrategy],
+  providers: [
+      AuthService, AccessTokenStrategy, RefreshTokenStrategy,
+      MailService,
+      UsersService,
+      CustomerService
+  ],
 })
 export class AuthModule {}

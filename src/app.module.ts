@@ -1,28 +1,28 @@
-import {Module} from '@nestjs/common';
+import {Global, Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {UsersModule} from './users/users.module';
 import {AuthModule} from './auth/auth.module';
 import {ConfigModule, ConfigService} from '@nestjs/config';
-import {UsersController} from "./users/users.controller";
-import {UsersService} from "./users/users.service";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import path from "path";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {User} from "./users/entities/user.entity";
-import {AuthController} from "./auth/auth.controller";
-import {AuthService} from "./auth/auth.service";
-import {AccessTokenStrategy} from "./auth/strategies/accessToken.strategy";
-import {RefreshTokenStrategy} from "./auth/strategies/refreshToken.strategy";
 import {JwtService} from "@nestjs/jwt";
 import {CustomerModule} from './customer/customer.module';
+import {MailModule} from './mail/mail.module';
+import {ScheduleModule} from "@nestjs/schedule";
+import {TasksModule} from "./shared/tasks/tasks.module";
 
+@Global()
 @Module({
     imports: [
+        TasksModule,
         ConfigModule.forRoot({envFilePath: `.${process.env.NODE_ENV}.env`, isGlobal: true}),
         ServeStaticModule.forRoot({
             rootPath: path?.resolve(__dirname, 'static'),
         }),
+        ScheduleModule.forRoot(),
         TypeOrmModule.forRoot(
             {
                 type: 'postgres',
@@ -35,25 +35,19 @@ import {CustomerModule} from './customer/customer.module';
                 synchronize: true,
                 entities: [User],
                 ssl: {requestCert: true, rejectUnauthorized: false}
-                // dialectOptions: {
-                //     ssl: {
-                //         require: true,
-                //         rejectUnauthorized: false,
-                //     },
-                // },
             }
         ),
-        UsersModule,
         AuthModule,
-        CustomerModule
+        MailModule,
+        UsersModule,
+        CustomerModule,
+        MailModule,
     ],
-    controllers: [
-        AppController,
-        // AuthController,
-        // UsersController
-    ],
+    controllers: [AppController],
     providers: [
-        AppService,JwtService, ConfigService
+        AppService,
+        JwtService,
+        ConfigService,
     ],
 })
 export class AppModule {
