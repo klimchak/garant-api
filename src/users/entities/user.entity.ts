@@ -3,7 +3,7 @@ import {PostUserDto} from "../dto/create-user.dto";
 import {Customer} from "../../customer/entities/customer.entity";
 
 export enum UserRoleEnum {
-    Super_admin = 1,
+    Super_admin = 0,
     Admin,
     Moderator,
     Customer

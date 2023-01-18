@@ -1,6 +1,6 @@
 export const AnotherStrings = {
-    name: 'Front-man learning backend',
-    version: '0.0.3',
+    name: 'GoBizy backend',
+    version: '0.0.1',
     description: 'An REST API with NESTJS and POSTGRES',
-    author: 'i.klimchyk & a.asipenka',
+    author: 'i.klimchyk',
 }

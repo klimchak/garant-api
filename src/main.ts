@@ -32,9 +32,7 @@ async function bootstrap() {
     SwaggerModule.setup('/api/swagger', app, document);
     // app.useGlobalPipes(new ClearMenuPipe())
     // app.useGlobalInterceptors(new ClearMenuInterceptor());
-    await app.listen(PORT, () =>
-        console.log(`🥑 Server was started on port ${PORT}`),
-    );
+    await app.listen(PORT, () => console.log(`🥑 Server was started on port ${PORT}`));
 }
 
 bootstrap();
